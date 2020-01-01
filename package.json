@@ -1,0 +1,48 @@
+{
+  "author": "DasDarki",
+  "version": "1.0:0",
+  "files": [
+    "client/ui/index.html",
+    "client/ui/lightning.png",
+    "client/ui/jquery.js",
+    "client/ui/jquery-ui.min.css",
+    "client/ui/jquery-ui.min.js",
+    "client/ui/bootstrap.bundle.min.js",
+    "client/ui/bootstrap.min.css"
+  ],
+  "server_scripts": [
+    "server/libs/date.lua",
+    "server/io/json.lua",
+    "server/io/config.lua",
+    "server/io/storage.lua",
+    "server/io/storage/local.lua",
+    "server/modules/admin/kick.lua",
+    "server/modules/admin/ban.lua",
+    "server/modules/admin/tempban.lua",
+    "server/modules/admin/unban.lua",
+    "server/modules/fun/armor.lua",
+    "server/modules/fun/heal.lua",
+    "server/modules/fun/ragdoll.lua",
+    "server/modules/others/equip_weapon.lua",
+    "server/modules/others/kill.lua",
+    "server/modules/others/spectate.lua",
+    "server/modules/permission/create_group.lua",
+    "server/modules/permission/delete_group.lua",
+    "server/modules/permission/add_permission.lua",
+    "server/modules/permission/add_player_permission.lua",
+    "server/modules/permission/remove_permission.lua",
+    "server/modules/permission/remove_player_permission.lua",
+    "server/modules/permission/set_group.lua",
+    "server/modules/spawning/vehicle_spawner.lua",
+    "server/modules/utils/bring.lua",
+    "server/modules/utils/teleport.lua",
+    "server/modules/utils/tppos.lua",
+    "server/modules/utils/tpdim.lua",
+    "server/modules/utils/refresh_player.lua",
+    "server/api.lua",
+    "server/index.lua"
+  ],
+  "client_scripts": [
+    "client/index.lua"
+  ]
+}

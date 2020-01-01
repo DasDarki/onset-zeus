@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <script>
+        (function (obj) {
+            ue.game = {};
+            ue.game.callevent = function (name, ...args) {
+                if (typeof name != "string") {
+                    return;
+                }
+
+                if (args.length == 0) {
+                    obj.callevent(name, "")
+                } else {
+                    let params = []
+                    for (let i = 0; i < args.length; i++) {
+                        params[i] = args[i];
+                    }
+                    obj.callevent(name, JSON.stringify(params));
+                }
+            };
+        })(ue.game);
+        CallEvent = ue.game.callevent;
+    </script>
+    <title>Zeus UI</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="jquery-ui.min.css">
+    <script src="jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.bundle.min.js"></script>
+    <style type="text/css">
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        ::-webkit-scrollbar-button {
+            width: 0;
+            height: 0;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: transparent;
+            border: 0 none transparent;
+            border-radius: 50px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb:active {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+            border: 0 none transparent;
+            border-radius: 50px;
+        }
+
+        ::-webkit-scrollbar-track:hover {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-track:active {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+    </style>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        #viewport {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #window {
+            width: 1000px;
+            height: 600px;
+            background-color: #212C32;
+            border-radius: 7px;
+            border: rgba(255, 255, 255, 0.2) solid 2px;
+            color: #d8d8d8;
+            font-family: sans-serif;
+        }
+
+        #window.is-center {
+            position: absolute;
+            top: calc(50% - 300px);
+            left: calc(50% - 500px);
+        }
+
+        #nav {
+            width: 100%;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 15px;
+            text-align: center;
+            font-weight: bold;
+            background-color: #182025;
+            border-bottom: rgba(255, 255, 255, 0.2) solid 1px;
+        }
+
+        #lightning {
+            height: 100%;
+            opacity: 0.35;
+            position: absolute;
+            top: 0;
+            right: 100px;
+            width: 500px;
+        }
+
+        #close {
+            font-size: 15px;
+            font-weight: bold;
+            user-select: none;
+            -webkit-user-select: none;
+            width: 25px;
+            height: 15px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+        }
+
+        #close:hover {
+            background-color: rgba(255, 0, 0, 0.6);
+        }
+
+        #list {
+            height: calc(100% - 15px);
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 250px;
+            background-color: #2B3940;
+            overflow-y: auto;
+        }
+
+        #wrapper {
+            position: absolute;
+            top: 15px;
+            right: 0;
+            width: calc(100% - 250px);
+            height: calc(100% - 15px);
+            display: flex;
+        }
+
+        #player-select {
+            height: 100%;
+            transition: width .5s;
+            width: 200px;
+            overflow: hidden;
+            padding: 0;
+            background-color: #2B3940;
+        }
+
+        #player-select ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #player-select ul li {
+            user-select: none;
+            -webkit-user-select: none;
+            color: #e1e1e1;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        #player-select ul li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        #player-select.is-inactive {
+            width: 0;
+        }
+
+        #content {
+            width: 100%;
+            height: 100%;
+            padding: 15px 25px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        #mod-form {
+            width: 100%;
+        }
+
+        .modules {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .modules li {
+            padding: 10px;
+            user-select: none;
+            -webkit-user-select: none;
+            color: #e1e1e1;
+            cursor: pointer;
+        }
+
+        .modules li:hover, .modules li.is-active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    <style>
+        /* Accordion styles */
+        .tabs {
+            overflow: hidden;
+        }
+
+        .tab {
+            width: 100%;
+            color: white;
+            overflow: hidden;
+        }
+
+        .tab-label {
+            display: flex;
+            justify-content: space-between;
+            padding: 1em;
+            background: #2F3E44;
+            font-weight: bold;
+            cursor: pointer;
+            /* Icon */
+        }
+
+        .tab-label:hover {
+            background: #263237;
+        }
+
+        .tab-label::after {
+            content: "\276F";
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            transition: all 0.35s;
+        }
+
+        .tab-content {
+            max-height: 0;
+            background-color: transparent;
+            transition: all 0.35s;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        input:checked + .tab-label {
+            background: #263237;
+        }
+
+        input:checked + .tab-label::after {
+            transform: rotate(90deg);
+        }
+
+        input:checked ~ .tab-content {
+            max-height: 100vh;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="viewport">
+    <div id="window">
+        <div id="nav">
+            Zeus by DasDarki
+            <div id="close">&times;</div>
+        </div>
+        <img id="lightning" src="lightning.png">
+        <div id="list">
+            <div class="tabs">
+                <div class="tab">
+                    <input type="checkbox" id="admin-tab" style="display: none">
+                    <label class="tab-label" for="admin-tab">Administration</label>
+                    <div class="tab-content">
+                        <ul id="admin-mods" class="modules">
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="perm-tab" style="display: none">
+                    <label class="tab-label" for="perm-tab">Permissions</label>
+                    <div class="tab-content">
+                        <ul id="perm-mods" class="modules">
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="spawning-tab" style="display: none">
+                    <label class="tab-label" for="spawning-tab">Spawning</label>
+                    <div class="tab-content">
+                        <ul id="spawning-mods" class="modules">
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="utils-tab" style="display: none">
+                    <label class="tab-label" for="utils-tab">Utilization</label>
+                    <div class="tab-content">
+                        <ul id="utils-mods" class="modules">
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="fun-tab" style="display: none">
+                    <label class="tab-label" for="fun-tab">Fun</label>
+                    <div class="tab-content">
+                        <ul id="fun-mods" class="modules">
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab">
+                    <input type="checkbox" id="others-tab" style="display: none">
+                    <label class="tab-label" for="others-tab">Others</label>
+                    <div class="tab-content">
+                        <ul id="others-mods" class="modules">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper" style="display: none">
+            <div id="content" style="float: left">
+                <label id="mod-description">Lorem ipsum dolor sit amet consectetur,
+                    adipisicing elit. Ipsum,
+                    reiciendis!</label>
+                <hr style="border-color: rgba(0, 0, 0, 0.4)">
+                <form id="mod-form">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="player-select form-control" required placeholder="Player">
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                </form>
+                <div style="text-align: right">
+                    <button id="mod-deactivate" class="btn btn-outline-danger">
+                        Deactivate
+                    </button>
+                    <button id="mod-activate" class="btn btn-outline-success">
+                        Activate
+                    </button>
+                </div>
+            </div>
+            <div id="player-select" class="is-inactive" style="text-align: center;">
+                <b style="margin-top: 10px">Player Select</b>
+                <hr style="border-color: rgba(0, 0, 0, 0.1)">
+                <ul>
+                    <li>Test</li>
+                    <li>Test 2</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const win = $('#window');
+    win.draggable({containment: "parent", handle: "#nav"});
+    win.addClass('is-center');
+    const DESCRIPTION = $('#mod-description');
+    const ADMIN_MODS = $('#admin-mods');
+    const PERM_MODS = $('#perm-mods');
+    const SPAWN_MODS = $('#spawning-mods');
+    const UTILS_MODS = $('#utils-mods');
+    const FUN_MODS = $('#fun-mods');
+    const OTHER_MODS = $('#others-mods');
+    const MOD_FORM = $('#mod-form');
+    const MOD_WRAPPER = $('#wrapper');
+    const PLAYER_SELECT = $('#player-select');
+    const PLAYER_SELECT_LIST = $('#player-select ul');
+    let currentPlayerInput;
+    let currentModules;
+    let currentModule;
+    let lastModuleSelect;
+    let currentPlayersCallback;
+
+    document.getElementById('close').onclick = function () {
+        CallEvent("Zeus_CloseUI");
+    };
+
+    function debug(message) {
+        CallEvent("Zeus_Debug", message);
+    }
+
+    $('#mod-activate').click(function () {
+        if (!currentModule) return;
+        let args1 = getArguments();
+        if (args1) {
+            CallEvent("Zeus_ActivateModule", JSON.stringify({mod: currentModule.name, args: args1}));
+        }
+    });
+
+    $('#mod-deactivate').click(function () {
+        if (!currentModule) return;
+        let args1 = getArguments();
+        if (args1) {
+            CallEvent("Zeus_DeactivateModule", JSON.stringify({mod: currentModule.name, args: args1}));
+        }
+    });
+
+    function getArguments() {
+        let args = [];
+        let failed = false;
+        $('#mod-form input').each(function () {
+            let input = $(this);
+            input.removeClass('is-invalid');
+            let type = input.attr("data-type");
+            let idx = parseInt(input.attr("data-idx"));
+            let val = input.val();
+            if (checkValue(val)) {
+                args[idx] = type === "P" ? input.attr("data-player") : val;
+            } else if (input.prop("required")) {
+                failed = true;
+                input.addClass('is-invalid');
+            } else {
+                args[idx] = "";
+            }
+        });
+        if (failed) {
+            return null;
+        }
+        $('#mod-form input').each(function () {
+            let input = $(this);
+            input.val("");
+        });
+        return args;
+    }
+
+    function checkValue(val) {
+        return val != null && val.trim().length > 0;
+    }
+
+    function parseForm(components) {
+        MOD_FORM.html("");
+        let id = 0;
+        let currentLine = '<div class="row">';
+        for (let i = 0; i < components.length; i++) {
+            let current = components.charAt(i);
+            let optional = components.charAt(i + 1);
+            if (optional === '?') {
+                optional = true;
+                i++;
+            } else {
+                optional = false;
+            }
+            currentLine += '<div class="col">' + getControl(id, current, optional) + '</div>';
+            id++;
+            if (id % 2 === 0) {
+                currentLine += '</div><br>';
+                MOD_FORM.append(currentLine);
+                currentLine = '<div class="row">';
+            }
+        }
+        id++;
+        MOD_FORM.attr("data-controls", id);
+        if (id % 2 === 0) {
+            currentLine += '</div><br>';
+            MOD_FORM.append(currentLine);
+        }
+
+        $('input.player-select').each(function () {
+            let q = $(this);
+            q.focus(function () {
+                showPlayerSelect(q);
+            });
+            q.blur(function () {
+                hidePlayerSelect(q);
+            });
+        });
+
+        MOD_WRAPPER.show();
+    }
+
+    function getControl(id, key, optional) {
+        if (key === "P") {
+            return '<input type="text" data-type="P" data-idx="' + id + '" class="player-select form-control"' + (!optional ? ' required' : '') + ' placeholder="Argument ' + (id + 1) + ': Player' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+        }
+        if (key === "T") {
+            return '<input type="text" data-type="T" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="Argument ' + (id + 1) + ': Text' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+        }
+        if (key === "N") {
+            return '<input type="number" data-type="N" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="Argument ' + (id + 1) + ': Number' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+        }
+        return '<label>Unknown component token: ' + key + '</label>';
+    }
+
+    function showPlayerSelect(input) {
+        currentPlayerInput = input;
+        getPlayers(function (players) {
+            PLAYER_SELECT_LIST.html("");
+            for (let i = 0; i < players.length; i++) {
+                let player = players[i];
+                PLAYER_SELECT_LIST.append("<li onclick='selectPlayer(\"" + player["name"] + "\", " + player["id"] + ")'>" + player["name"] + "</li>");
+            }
+            PLAYER_SELECT.removeClass('is-inactive');
+        });
+    }
+
+    function selectPlayer(name, id) {
+        if (currentPlayerInput) {
+            currentPlayerInput.val(name);
+            currentPlayerInput.attr('data-player', id);
+            hidePlayerSelect();
+        }
+    }
+
+    function hidePlayerSelect() {
+        PLAYER_SELECT.addClass('is-inactive');
+    }
+
+    function getPlayers(callback) {
+        currentPlayersCallback = callback;
+        CallEvent('Zeus_RetrievePlayers');
+    }
+
+    String.prototype.replaceAll = function (search, replacement) {
+        let target = this;
+        return target.replace(new RegExp(search, 'g'), replacement);
+    };
+
+    function retrievePlayers(players) {
+        if (currentPlayersCallback) {
+            try {
+                let newplayers = JSON.parse(players.replaceAll("\u0000", ""));
+                currentPlayersCallback(newplayers);
+            } catch (e) {
+            }
+        }
+    }
+
+    function openModule(owner, idx) {
+        MOD_WRAPPER.hide();
+        let q = $(owner);
+        if (currentModules) {
+            if (lastModuleSelect) {
+                lastModuleSelect.removeClass('is-active');
+            }
+            let mod = currentModules[idx];
+            currentModule = mod;
+            lastModuleSelect = q;
+            DESCRIPTION.html(mod.description);
+            if (mod.toggle == true) {
+                $('#mod-deactivate').show();
+            } else {
+                $('#mod-deactivate').hide();
+            }
+            parseForm(mod.ui);
+            lastModuleSelect.addClass('is-active');
+        }
+    }
+
+    function setup(json) {
+        let modules = JSON.parse(json);
+        currentModules = modules;
+        for (let i = 0; i < modules.length; i++) {
+            let module = currentModules[i];
+            let name = module["name"];
+            getTab(module["group"]).append('<li onclick="openModule(this, ' + i + ')">' + name + '</li>');
+        }
+    }
+
+    function getTab(group) {
+        if (group === "admin") {
+            return ADMIN_MODS;
+        }
+        if (group === "fun") {
+            return FUN_MODS;
+        }
+        if (group === "permission") {
+            return PERM_MODS;
+        }
+        if (group === "spawning") {
+            return SPAWN_MODS;
+        }
+        if (group === "utils") {
+            return UTILS_MODS;
+        }
+
+        return OTHER_MODS;
+    }
+</script>
+</body>
+</html>
