@@ -213,3 +213,6 @@ end
 AddEvent("OnPlayerSteamAuth", OnPlayerSteamAuth)
 
 print("Zeus v" .. zeus._VERSION .. " by DasDarki started!")
+if config["dev-mode"] == true then
+    print("--- !!!WARNING!!! ZEUS IS IN DEV MODE !!!WARNING!!! ---")
+end

@@ -12,13 +12,18 @@ content["msg-veh-model-not-exist"] = "[Zeus] The Vehicle Model {1} does not exis
 
 content["custom-chat"] = false
 content["store-type"] = "LOCAL" -- coming soon: mysql
-content["admins"] = { "76561198056610149" } -- Enter SteamID64 in here which will have all permissions
+content["admins"] = {  } -- Enter SteamID64 in here which will have all permissions
+content["dev-mode"] = true -- Every User on the Server has Admin Permissions, when true
 
 function IsLocalStorage()
     return content["store-type"] == "LOCAL"
 end
 
 function IsAdmin(steamID)
+    if content["dev-mode"] == true then
+        return true
+    end
+
     for _, value in ipairs(content["admins"]) do
         if tostring(value) == steamID then
             return true
