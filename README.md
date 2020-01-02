@@ -171,9 +171,9 @@ To implement the API interface, see below under **Zeus API**.
 
 ## Ban System
 Das Bann System von Zeus ist ziemlich simpel und besteht aus 3 Modulen. Ein Perma-Bann Modul, ein Temp-Bann module sowie ein unban-Modul.    
-**Ban**: Banish the player to infinity.
-**Temp Ban**: Banish the player for a certain amount of time. The time can be set via a time text. You can set the years, months, weeks, days, hours, minutes and seconds. Such a time text looks like the following: *1y1M1w1d1d1h1m1s*. This time text would ban the player for one year, one month, one week, one day, one hour, one minute and one second. Please note that the respective time must be written all together, but there is no obligation to enter e.g. the year.
-**Unban**: Unban the player. The module requires the Steam64 ID of the player to be entered.
+**Ban**: Banish the player to infinity.   
+**Temp Ban**: Banish the player for a certain amount of time. The time can be set via a time text. You can set the years, months, weeks, days, hours, minutes and seconds. Such a time text looks like the following: *1y1M1w1d1d1h1m1s*. This time text would ban the player for one year, one month, one week, one day, one hour, one minute and one second. Please note that the respective time must be written all together, but there is no obligation to enter e.g. the year.    
+**Unban**: Unban the player. The module requires the Steam64 ID of the player to be entered.    
 
 ## Zeus API
 To use the API, you must first import the package into your package. To do this, simply use the [ImportPackage](https://dev.playonset.com/wiki/ImportPackage) method as follows:
