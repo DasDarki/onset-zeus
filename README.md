@@ -170,7 +170,7 @@ Only those who have the permission *github.test.helloworld* can execute this com
 To implement the API interface, see below under **Zeus API**.
 
 ## Ban System
-Das Bann System von Zeus ist ziemlich simpel und besteht aus 3 Modulen. Ein Perma-Bann Modul, ein Temp-Bann module sowie ein unban-Modul.    
+The ban system from Zeus is quite simple and consists of 3 modules. A perm ban module, a temp ban module and an unban module.  
 **Ban**: Banish the player to infinity.   
 **Temp Ban**: Banish the player for a certain amount of time. The time can be set via a time text. You can set the years, months, weeks, days, hours, minutes and seconds. Such a time text looks like the following: *1y1M1w1d1d1h1m1s*. This time text would ban the player for one year, one month, one week, one day, one hour, one minute and one second. Please note that the respective time must be written all together, but there is no obligation to enter e.g. the year.    
 **Unban**: Unban the player. The module requires the Steam64 ID of the player to be entered.    
