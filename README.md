@@ -183,5 +183,20 @@ zeus = ImportPackage("zeus")
 Now you can use all methods of the API interface via *zeus.X()*. 
 Since we don't want to explain the complete API, which is explained by the names of the methods themselves, we refer to the API file here: [zeus/server/api.lua](https://github.com/DasDarki/onset-zeus/blob/master/server/api.lua)
 
+## Any Bugs, Ideas or just feedback?
+[OPEN AN ISSUE](https://github.com/DasDarki/onset-zeus/issues/new) but please pay attention to our issue template:    
+*This issue template is only important for bug reports.*    
+```
+Affected Module:
+Please describe here, which module is affected. If no module is affected but Zeus itself, describe which part of Zeus is affected.
+
+Situation:
+Please describe here, what happens. How does the bug occur and what did the bug. Are there any errors in the console? Please show ous the log! And one really important thing: How can be reproduce the bug. If we can't reproduce it, we can't help you.
+
+Setup:
+Please describe here, what the setup was you used. What server software are you running, which game version etc.
+```
+As long as you stick to the template, we can give you quick help and improve Zeus together. Thanks for your support.
+
 ## Credits
 Zeus is created by DasDarki, and Contributers and is licensed unter the MIT License.
