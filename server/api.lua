@@ -106,6 +106,21 @@ function zeus.FormatDate(val)
     return current:fmt("%F %T")
 end
 
+function zeus.GetStorageType()
+    return config["store-type"]
+end
+AddFunctionExport("GetStorageType", zeus.GetStorageType);
+
+function zeus.IsAdmin(player)
+    local steam = player
+    if IsValidPlayer(player) then
+        steam = GetPlayerSteamId(player)
+    end
+
+    return IsAdmin(player)
+end
+AddFunctionExport("IsAdmin", zeus.IsAdmin);
+
 function zeus.Unban(player)
     return storage:Unban(player)
 end
