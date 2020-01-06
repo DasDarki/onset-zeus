@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Tempban",
-    description = "Bans a Player for a specific time (Arg2: Time (y = years, M = months, w = weeks, d = days, h = hours, m = minutes, s = seconds), Arg3: Reason)",
-    ui_component = "PTT"
+    description = "Bans a Player for a specific Time (y = years, M = months, w = weeks, d = days, h = hours, m = minutes, s = seconds)",
+    ui_component = "P(Target)T(Time)T(Reason)"
 }
 
 function mod:GetName()

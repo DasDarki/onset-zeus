@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Kick",
     description = "Kicks a player",
-    ui_component = "PT"
+    ui_component = "P(Target)T(Reason)"
 }
 
 function mod:GetName()

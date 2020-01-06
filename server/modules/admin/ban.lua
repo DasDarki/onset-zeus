@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Ban",
-    description = "Bans a Player forever (Arg2: Reason)",
-    ui_component = "PT"
+    description = "Bans a Player forever",
+    ui_component = "P(Target)T(Reason)"
 }
 
 function mod:GetName()

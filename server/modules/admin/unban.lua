@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Unban",
-    description = "Unbans a Player (Arg1: Steam64 ID)",
-    ui_component = "T"
+    description = "Unbans a Player",
+    ui_component = "T(SteamID64)"
 }
 
 function mod:GetName()

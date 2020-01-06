@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Add Player Permission",
-    description = "Adds a Player Permission to the Group (Arg1: Player, Arg2: Permission)",
-    ui_component = "PT"
+    description = "Adds a Player Permission to the Group",
+    ui_component = "P(Player)T(Permission)"
 }
 
 function mod:GetName()

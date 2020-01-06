@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Remove Player Permission",
-    description = "Removes a Player Permission from the Group (Arg1: Player, Arg2: Permission)",
-    ui_component = "PT"
+    description = "Removes a Player Permission from the Group",
+    ui_component = "P(Target)T(Permission)"
 }
 
 function mod:GetName()

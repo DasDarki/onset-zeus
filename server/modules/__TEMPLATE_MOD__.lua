@@ -11,7 +11,7 @@ function mod:GetName()
 end
 
 function mod:GetTarget(player, args)
-    return player -- Return the target of this module
+    return player
 end
 
 function mod:GetUIComponent()
@@ -21,6 +21,7 @@ function mod:GetUIComponent()
     -- [T] Text Input. Takes text input from the player
     -- [N] Number(float) Input. Takes number input from the player
     -- Add a ? after the Component if it is optional
+    -- You can also Name components via Brackets, like: P(Test), then in the Placeholder of this Player Select stands "Test", the optional marker must be at the end ()?
     -- Example. PT? - Player must be entered, Text can be entered, but did not need to
     return mod.ui_component
 end

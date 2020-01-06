@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "TPPos",
-    description = "Teleports yourself to the given X, Y, Z coordinates",
-    ui_component = "NNN"
+    description = "Teleports yourself to the given X, Y, Z Coordinates",
+    ui_component = "N(X-Coord)N(Y-Coord)N(Z-Coord)"
 }
 
 function mod:GetName()

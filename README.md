@@ -62,7 +62,6 @@ return content
 | **msg-** | *see above*| *every text* | This are the i18n messages printed by Zeus. You can change them like you want to. Some messages have placeholders (e.g. *{1}*) this placeholders will be replaced by Zeus with values dynamically. You can use them, too but you don't need to. |
 | **custom-chat** | false | false / true | *not implemented yet* |
 | **store-type** | LOCAL | LOCAL / MYSQL (*not implemented yet*) | The way Zeus stores its data |
-| **admins** | { } | Lua Table | Users which SteamID64 is entered in this table are counting as admins and have all permissions |
 | **dev-mode** | true | false / true | When enabled, every player on the server has all permissions. Zeus will warn you on server start, if the dev mode is enabled | 
 
 ## Modules

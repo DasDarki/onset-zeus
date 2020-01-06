@@ -1,4 +1,4 @@
-local zeus = { _VERSION = "1.0:2" }
+local zeus = { _VERSION = "1.0:3" }
 local date = require('packages/' .. GetPackageName() .. '/server/libs/date')
 local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local storage
@@ -117,9 +117,29 @@ function zeus.IsAdmin(player)
         steam = GetPlayerSteamId(player)
     end
 
-    return IsAdmin(player)
+    return storage:IsAdmin(player)
 end
 AddFunctionExport("IsAdmin", zeus.IsAdmin);
+
+function zeus.MakeAdmin(player)
+    local steam = player
+    if IsValidPlayer(player) then
+        steam = GetPlayerSteamId(player)
+    end
+
+    return storage:MakeAdmin(player, true)
+end
+AddFunctionExport("MakeAdmin", zeus.MakeAdmin);
+
+function zeus.RemoveAdmin(player)
+    local steam = player
+    if IsValidPlayer(player) then
+        steam = GetPlayerSteamId(player)
+    end
+
+    return storage:MakeAdmin(player, false)
+end
+AddFunctionExport("RemoveAdmin", zeus.RemoveAdmin);
 
 function zeus.Unban(player)
     return storage:Unban(player)

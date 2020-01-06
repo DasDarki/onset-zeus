@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Heal",
     description = "Heal yourself or another player",
-    ui_component = "N?P?"
+    ui_component = "N(Amount)?P(Target)?"
 }
 
 function mod:GetName()

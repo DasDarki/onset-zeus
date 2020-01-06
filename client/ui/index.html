@@ -393,6 +393,7 @@
     const MOD_WRAPPER = $('#wrapper');
     const PLAYER_SELECT = $('#player-select');
     const PLAYER_SELECT_LIST = $('#player-select ul');
+    const COMPONENT_PATTERN = /((?<type>[P|T|N])(\((?<name>[a-zA-Z0-9_-]*)\))?(?<optional>\?)?)/gi;
     let currentPlayerInput;
     let currentModules;
     let currentModule;
@@ -455,20 +456,14 @@
         return val != null && val.trim().length > 0;
     }
 
-    function parseForm(components) {
+    function parseForm(form) {
         MOD_FORM.html("");
         let id = 0;
         let currentLine = '<div class="row">';
+        let components = Componizer(form);
         for (let i = 0; i < components.length; i++) {
-            let current = components.charAt(i);
-            let optional = components.charAt(i + 1);
-            if (optional === '?') {
-                optional = true;
-                i++;
-            } else {
-                optional = false;
-            }
-            currentLine += '<div class="col">' + getControl(id, current, optional) + '</div>';
+            let component = components[i];
+            currentLine += '<div class="col">' + getControl(id, component.type, component.isOptional, component.name) + '</div>';
             id++;
             if (id % 2 === 0) {
                 currentLine += '</div><br>';
@@ -496,15 +491,18 @@
         MOD_WRAPPER.show();
     }
 
-    function getControl(id, key, optional) {
+    function getControl(id, key, optional, name) {
+        if (!name) {
+            name = "Argument " + (id + 1);
+        }
         if (key === "P") {
-            return '<input type="text" data-type="P" data-idx="' + id + '" class="player-select form-control"' + (!optional ? ' required' : '') + ' placeholder="Argument ' + (id + 1) + ': Player' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+            return '<input type="text" data-type="P" readonly data-idx="' + id + '" class="player-select form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (player)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
         }
         if (key === "T") {
-            return '<input type="text" data-type="T" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="Argument ' + (id + 1) + ': Text' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+            return '<input type="text" data-type="T" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (text)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
         }
         if (key === "N") {
-            return '<input type="number" data-type="N" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="Argument ' + (id + 1) + ': Number' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+            return '<input type="number" data-type="N" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (number)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
         }
         return '<label>Unknown component token: ' + key + '</label>';
     }
@@ -602,6 +600,20 @@
         }
 
         return OTHER_MODS;
+    }
+
+    function Componizer(components) {
+        let tokens = [];
+        let currentToken;
+        while (currentToken = COMPONENT_PATTERN.exec(components)) {
+            tokens.push({
+                type: currentToken.groups["type"],
+                name: currentToken.groups["name"],
+                isOptional: currentToken.groups["optional"] !== undefined
+            });
+        }
+
+        return tokens;
     }
 </script>
 </body>

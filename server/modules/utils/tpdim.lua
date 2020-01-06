@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "TPDim",
-    description = "Teleports a Player into another Dimension (Arg1: Dimension)",
-    ui_component = "NP?"
+    description = "Teleports a Player into another Dimension",
+    ui_component = "N(Dimension)P(Target)?"
 }
 
 function mod:GetName()

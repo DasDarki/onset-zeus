@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Remove Permission",
     description = "Removes a Permission from the Group (Arg1: Group, Arg2: Permission)",
-    ui_component = "TT"
+    ui_component = "T(Group Name)T(Permission)"
 }
 
 function mod:GetName()
@@ -37,7 +37,10 @@ function mod:Activate(executor, target, args)
         return nil
     end
 
-    _G.zeus.RemovePermission(args[1], args[2])
+    if _G.zeus.RemovePermission(args[1], args[2]) == false then
+        AddPlayerChat(executor, FormatMsg("msg-mod-failed", mod.name, "the group is not existing"))
+        return nil
+    end
     AddPlayerChat(executor, FormatMsg("msg-mod-success", mod.name))
     return true -- Return false, if any error occurred, or return nil if any error occurred, but the messaging was managed in the function itself
 end

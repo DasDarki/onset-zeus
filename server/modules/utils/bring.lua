@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Bring",
     description = "Brings another to yourself",
-    ui_component = "P"
+    ui_component = "P(Target)"
 }
 
 function mod:GetName()

@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Refresh Player",
-    description = "Forces a Refresh for the Player",
-    ui_component = "P"
+    description = "Forces a Refresh for the Player which means the Players Zeus Menu is getting updated",
+    ui_component = "P(Target)"
 }
 
 function mod:GetName()

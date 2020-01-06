@@ -1,4 +1,5 @@
 local storage = require('packages/' .. GetPackageName() .. '/server/io/storage')
+local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local store = { _VERSION = "1.0:0" }
 local groups = storage.Load("groups", function()
     local new = {}
@@ -11,6 +12,9 @@ end)
 local players = storage.Load("players", function()
     return {}
 end)
+local admins = storage.Load("admins", function()
+    return {}
+end)
 
 function format(player)
     if IsValidPlayer(player) then
@@ -21,7 +25,7 @@ function format(player)
 end
 
 function hasPermission(player, playerId, permission)
-    if IsAdmin(player) then
+    if store:IsAdmin(player) then
         return true
     end
 
@@ -109,6 +113,40 @@ function initPlayer(player)
             group = "def_group"
         }
     end
+end
+
+function returnSteam(id)
+    if IsValidPlayer(id) then
+        return GetPlayerSteamId(id)
+    end
+
+    return id
+end
+
+function store:IsAdmin(playerId)
+    if config["dev-mode"] == true then
+        return true
+    end
+
+    local steamId = returnSteam(playerId)
+    return containsValue(admins, tostring(steamId))
+end
+
+function store:MakeAdmin(playerId, enable)
+    local steamId = returnSteam(playerId)
+    if enable == true then
+        if not containsValue(admins, tostring(steamId)) then
+            admins[#admins + 1] = tostring(steamId)
+            return true
+        end
+    else
+        if containsValue(admins, tostring(steamId)) then
+            removeValue(admins, tostring(steamId))
+            return true
+        end
+    end
+
+    return false
 end
 
 function store:Unban(playerId)
@@ -287,6 +325,7 @@ end
 AddEvent("OnPackageStop", function()
     storage.Save("groups", groups)
     storage.Save("players", players)
+    storage.Save("admins", admins)
 end)
 
 return store

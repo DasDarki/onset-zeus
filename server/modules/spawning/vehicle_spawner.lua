@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Vehicle Spawner",
     description = "Spawns the wanted Vehicle and sets the Player into it",
-    ui_component = "N"
+    ui_component = "N(Vehicle Model)"
 }
 
 function mod:GetName()

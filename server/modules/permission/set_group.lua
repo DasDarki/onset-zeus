@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Set Group",
     description = "Sets a Player Group (Arg1: Player, Arg2: Group)",
-    ui_component = "PT"
+    ui_component = "P(Target)T(Group Name)"
 }
 
 function mod:GetName()

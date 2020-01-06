@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Teleport",
-    description = "Teleports yourself to a player",
-    ui_component = "P"
+    description = "Teleports yourself to a Player",
+    ui_component = "P(Target)"
 }
 
 function mod:GetName()

@@ -2,8 +2,8 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 
 local mod = {
     name = "Create Group",
-    description = "Creates a new Group (Arg1: Name)",
-    ui_component = "T"
+    description = "Creates a new Group",
+    ui_component = "T(Group Name)"
 }
 
 function mod:GetName()
@@ -32,7 +32,10 @@ function mod:Activate(executor, target, args)
         return nil
     end
 
-    _G.zeus.CreateGroup(args[1])
+    if _G.zeus.CreateGroup(args[1]) == false then
+        AddPlayerChat(executor, FormatMsg("msg-mod-failed", mod.name, "the group is already existing"))
+        return nil
+    end
     AddPlayerChat(executor, FormatMsg("msg-mod-success", mod.name))
     return true -- Return false, if any error occurred, or return nil if any error occurred, but the messaging was managed in the function itself
 end
