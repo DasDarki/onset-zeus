@@ -17,31 +17,26 @@ content["msg-argument-missing"] = "[Zeus] Failed to executed because Argument {1
 content["msg-argument-invalid"] = "[Zeus] Failed to executed because Argument {1} is invalid!"
 content["msg-mod-success"] = "[Zeus] Module {1} was successfully executed!"
 content["msg-mod-disabled"] = "[Zeus] Module {1} was successfully disabled!"
+content["msg-mod-failed"] = "[Zeus] Module {1} failed because {2}!"
 content["msg-banned"] = "You are banned: {1}"
--- VEH SPAWN --
 content["msg-veh-model-not-exist"] = "[Zeus] The Vehicle Model {1} does not exist!"
 
-content["custom-chat"] = false
-content["store-type"] = "LOCAL" -- coming soon: mysql
-content["admins"] = {  } -- Enter SteamID64 in here which will have all permissions
-content["dev-mode"] = true -- Every User on the Server has Admin Permissions, when true
+content["custom-chat"] = false -- coming soon: mysql
+content["store-type"] = "LOCAL" -- or MYSQL
+content["dev-mode"] = true
+
+content["db-host"] = "localhost"
+content["db-user"] = "zeus-db"
+content["db-password"] = "this-is-a-safe-pw"
+content["db-name"] = "zeus-db"
+content["db-charset"] = "utf8mb4"
+
+function GetDatabaseConnection()
+    return content["db-host"], content["db-user"], content["db-password"], content["db-name"]
+end
 
 function IsLocalStorage()
     return content["store-type"] == "LOCAL"
-end
-
-function IsAdmin(steamID)
-    if content["dev-mode"] == true then
-        return true
-    end
-
-    for _, value in ipairs(content["admins"]) do
-        if tostring(value) == steamID then
-            return true
-        end
-    end
-
-    return false
 end
 
 function FormatMsg(key, ...)
@@ -61,8 +56,13 @@ return content
 | ---------- | -------------| -------------  | -----------|
 | **msg-** | *see above*| *every text* | This are the i18n messages printed by Zeus. You can change them like you want to. Some messages have placeholders (e.g. *{1}*) this placeholders will be replaced by Zeus with values dynamically. You can use them, too but you don't need to. |
 | **custom-chat** | false | false / true | *not implemented yet* |
-| **store-type** | LOCAL | LOCAL / MYSQL (*not implemented yet*) | The way Zeus stores its data |
+| **store-type** | LOCAL | LOCAL / MYSQL | The way Zeus stores its data |
 | **dev-mode** | true | false / true | When enabled, every player on the server has all permissions. Zeus will warn you on server start, if the dev mode is enabled | 
+| **db-host** | localhost | any ip | The hostname of th MySQL database |
+| **db-user** | zeus-db | text | The username of the MySQL database |
+| **db-password** |  this-is-a-safe-pw | text | The password of the MySQL database |
+| **db-name** | zeus-db | text | The database name of the MySQL database |
+| **db-charset** | utf8mb4 | MariaDB Charsets | The charset of the MySQL database |
 
 ## Modules
 Modules are the main components of Zeus. Without them, Zeus is only a frame. In Zeus are some default modules which offers only the basics. But with a little bit of work and the knowledge to code in LUA you can create own ones easily.   

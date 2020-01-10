@@ -11,8 +11,18 @@ content["msg-banned"] = "You are banned: {1}"
 content["msg-veh-model-not-exist"] = "[Zeus] The Vehicle Model {1} does not exist!"
 
 content["custom-chat"] = false -- coming soon: mysql
-content["store-type"] = "LOCAL" -- coming soon: mysql
+content["store-type"] = "LOCAL" -- or MYSQL
 content["dev-mode"] = true
+
+content["db-host"] = "localhost"
+content["db-user"] = "zeus-db"
+content["db-password"] = "this-is-a-safe-pw"
+content["db-name"] = "zeus-db"
+content["db-charset"] = "utf8mb4"
+
+function GetDatabaseConnection()
+    return content["db-host"], content["db-user"], content["db-password"], content["db-name"]
+end
 
 function IsLocalStorage()
     return content["store-type"] == "LOCAL"

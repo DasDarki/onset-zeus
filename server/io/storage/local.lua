@@ -116,11 +116,14 @@ function initPlayer(player)
 end
 
 function returnSteam(id)
+    local steamId = id
+
     if IsValidPlayer(id) then
-        return GetPlayerSteamId(id)
+        steamId = tostring(GetPlayerSteamId(id))
     end
 
-    return id
+    initPlayer(steamId)
+    return steamId
 end
 
 function store:IsAdmin(playerId)

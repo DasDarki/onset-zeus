@@ -37,7 +37,7 @@ function mod:Activate(executor, target, args)
         return nil
     end
 
-    if _G.zeus.RemovePermission(args[1], args[2]) == false then
+    if _G.zeus.AddPermission(args[1], args[2]) == false then
         AddPlayerChat(executor, FormatMsg("msg-mod-failed", mod.name, "the group is not existing"))
         return nil
     end

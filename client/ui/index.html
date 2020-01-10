@@ -393,7 +393,7 @@
     const MOD_WRAPPER = $('#wrapper');
     const PLAYER_SELECT = $('#player-select');
     const PLAYER_SELECT_LIST = $('#player-select ul');
-    const COMPONENT_PATTERN = /((?<type>[P|T|N])(\((?<name>[a-zA-Z0-9_-]*)\))?(?<optional>\?)?)/gi;
+    const COMPONENT_PATTERN = /((?<type>[P|T|N])(\((?<name>[a-zA-Z0-9_\- ]*)\))?(?<optional>\?)?)/gi;
     let currentPlayerInput;
     let currentModules;
     let currentModule;
@@ -496,7 +496,7 @@
             name = "Argument " + (id + 1);
         }
         if (key === "P") {
-            return '<input type="text" data-type="P" readonly data-idx="' + id + '" class="player-select form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (player)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
+            return '<input type="text" onkeydown="onPlayerKeyDown(this, event)" data-type="P" readonly data-idx="' + id + '" class="player-select form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (player)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
         }
         if (key === "T") {
             return '<input type="text" data-type="T" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (text)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
@@ -505,6 +505,11 @@
             return '<input type="number" data-type="N" data-idx="' + id + '" class="form-control"' + (!optional ? ' required' : '') + ' placeholder="' + name + ' (number)' + (!optional ? '' : '?') + '" id="mod-control-' + id + '">';
         }
         return '<label>Unknown component token: ' + key + '</label>';
+    }
+
+    function onPlayerKeyDown(sender, event) {
+        if (event.which === 8 || event.which === 46)
+            $(sender).val("");
     }
 
     function showPlayerSelect(input) {
@@ -573,6 +578,12 @@
     }
 
     function setup(json) {
+        ADMIN_MODS.html("");
+        FUN_MODS.html("");
+        OTHER_MODS.html("");
+        PERM_MODS.html("");
+        SPAWN_MODS.html("");
+        UTILS_MODS.html("");
         let modules = JSON.parse(json);
         currentModules = modules;
         for (let i = 0; i < modules.length; i++) {

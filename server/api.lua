@@ -1,4 +1,4 @@
-local zeus = { _VERSION = "1.0:3" }
+local zeus = { _VERSION = "1.1:0" }
 local date = require('packages/' .. GetPackageName() .. '/server/libs/date')
 local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local storage
@@ -35,7 +35,6 @@ function zeus.FormatDate(val)
     local num = ""
     for i = 1, #str do
         local c = str:sub(i, i)
-        print(c)
         if c == "y" then
             local v = tonumber(num)
             if v == nil then
@@ -127,7 +126,9 @@ function zeus.MakeAdmin(player)
         steam = GetPlayerSteamId(player)
     end
 
-    return storage:MakeAdmin(player, true)
+    local result = storage:MakeAdmin(player, true)
+    _G.zeus.RefreshPlayer(player)
+    return result
 end
 AddFunctionExport("MakeAdmin", zeus.MakeAdmin);
 
@@ -137,7 +138,9 @@ function zeus.RemoveAdmin(player)
         steam = GetPlayerSteamId(player)
     end
 
-    return storage:MakeAdmin(player, false)
+    local result = storage:MakeAdmin(player, false)
+    _G.zeus.RefreshPlayer(player)
+    return result
 end
 AddFunctionExport("RemoveAdmin", zeus.RemoveAdmin);
 
@@ -179,7 +182,9 @@ end
 AddFunctionExport("HasGroup", zeus.HasGroup);
 
 function zeus.AddGroup(player, group)
-    return storage:AddGroup(player, group)
+    local result = storage:AddGroup(player, group)
+    _G.zeus.RefreshPlayer(player)
+    return result
 end
 AddFunctionExport("AddGroup", zeus.AddGroup);
 
@@ -189,7 +194,9 @@ end
 AddFunctionExport("GetGroup", zeus.GetGroup);
 
 function zeus.RemoveGroup(player, group)
-    return storage:RemoveGroup(player, group)
+    local result = storage:RemoveGroup(player, group)
+    _G.zeus.RefreshPlayer(player)
+    return result
 end
 AddFunctionExport("RemoveGroup", zeus.RemoveGroup);
 
@@ -204,27 +211,47 @@ end
 AddFunctionExport("CreateGroup", zeus.CreateGroup);
 
 function zeus.DeleteGroup(group)
-    return storage:DeleteGroup(group)
+    local result = storage:DeleteGroup(group)
+    for _, v in pairs(GetAllPlayers()) do
+        _G.zeus.RefreshPlayer(v)
+    end
+    return result
 end
 AddFunctionExport("DeleteGroup", zeus.DeleteGroup);
 
 function zeus.AddPermission(group, permission)
-    return storage:AddPermission(group, permission)
+    local result = storage:AddPermission(group, permission)
+    for _, v in pairs(GetAllPlayers()) do
+        if zeus.HasGroup(v, group) then
+            _G.zeus.RefreshPlayer(v)
+        end
+    end
+    return result
 end
 AddFunctionExport("AddPermission", zeus.AddPermission);
 
 function zeus.RemovePermission(group, permission)
-    return storage:RemovePermission(group, permission)
+    local result = storage:RemovePermission(group, permission)
+    for _, v in pairs(GetAllPlayers()) do
+        if zeus.HasGroup(v, group) then
+            _G.zeus.RefreshPlayer(v)
+        end
+    end
+    return result
 end
 AddFunctionExport("RemovePermission", zeus.RemovePermission);
 
 function zeus.AddPlayerPermission(player, permission)
-    return storage:AddPlayerPermission(player, permission)
+    local result = storage:AddPlayerPermission(player, permission)
+    _G.zeus.RefreshPlayer(player)
+    return result
 end
 AddFunctionExport("AddPlayerPermission", zeus.AddPlayerPermission);
 
 function zeus.RemovePlayerPermission(player, permission)
-    return storage:RemovePlayerPermission(player, permission)
+    local result = storage:RemovePlayerPermission(player, permission)
+    _G.zeus.RefreshPlayer(player)
+    return result
 end
 AddFunctionExport("RemovePlayerPermission", zeus.RemovePlayerPermission);
 

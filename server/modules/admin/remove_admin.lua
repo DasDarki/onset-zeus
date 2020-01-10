@@ -3,7 +3,7 @@ local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local mod = {
     name = "Remove Admin",
     description = "Removes a Players Admin Privileges",
-    ui_component = "P(Target)"
+    ui_component = "P(Target)?T(SteamID64)?"
 }
 
 function mod:GetName()
@@ -11,17 +11,20 @@ function mod:GetName()
 end
 
 function mod:GetTarget(player, args)
-    if args[1] == nil then
-        AddPlayerChat(player, FormatMsg("msg-argument-missing", "Player"))
+    local target = nil
+
+    if args[1] ~= nil and IsValidPlayer(args[1]) then
+        target = args[1]
+    elseif args[2] ~= nil then
+        target = args[2]
+    end
+
+    if target == nil then
+        AddPlayerChat(player, FormatMsg("msg-argument-invalid", "Target"))
         return nil
     end
 
-    if not IsValidPlayer(args[1]) then
-        AddPlayerChat(player, FormatMsg("msg-argument-invalid", "Player"))
-        return nil
-    end
-
-    return args[1]
+    return target
 end
 
 function mod:GetUIComponent()
