@@ -12,7 +12,17 @@ content["msg-veh-model-not-exist"] = "[Zeus] The Vehicle Model {1} does not exis
 
 content["custom-chat"] = false -- coming soon: mysql
 content["store-type"] = "LOCAL" -- or MYSQL
-content["dev-mode"] = true
+--[[
+INFORMATION ABOUT THE DEV MODE
+
+By default the dev mode is on, as long as the dev mode is on, all players are considered admin and 
+have all rights over the server and Zeus. Please only use this mode as long as nobody is admin, 
+because without an admin nobody can do anything with Zeus. To appoint someone as an admin, 
+open Zeus with /zeus and select the "Make Admin" module under Administration. 
+Then you only have to select a player and click on Activate. The player will then be appointed as admin. 
+Then you can turn off the dev mode, restart the server and administrate your server without any problems.
+]]--
+content["dev-mode"] = true 
 
 content["db-host"] = "localhost"
 content["db-user"] = "zeus-db"
