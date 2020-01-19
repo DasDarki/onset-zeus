@@ -12,9 +12,14 @@ function storage.Load(name, factory)
 end
 
 function storage.Save(name, data)
-    local f = io.open(formatPath(name), "w")
-    f:write(json_encode(data))
-    f:close()
+    initDir()
+    local f, err = io.open(formatPath(name), "w")
+    if f == nil then
+        print("[Zeus] An error occurred while saving data to storage: " .. err)
+    else
+        f:write(json_encode(data))
+        f:close()
+    end
 end
 
 function readFile(name)
@@ -37,6 +42,11 @@ end
 
 function formatPath(name)
     return 'packages/' .. GetPackageName() .. '/server/data/' .. name .. '.json'
+end
+
+function initDir()
+    local dir = 'packages/' .. GetPackageName() .. '/server/data/'
+    os.execute("mkdir " .. dir)
 end
 
 return storage
