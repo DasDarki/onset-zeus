@@ -1,4 +1,4 @@
-local zeus = { _VERSION = "1.1:0" }
+local zeus = { _VERSION = "1.1:0", commandEventPrefix = "zeus" }
 local date = require('packages/' .. GetPackageName() .. '/server/libs/date')
 local config = require('packages/' .. GetPackageName() .. '/server/io/config')
 local storage
@@ -260,10 +260,12 @@ function zeus.HasGroupPermission(group, permission)
 end
 AddFunctionExport("HasGroupPermission", zeus.HasGroupPermission);
 
-function zeus.AddPermCommand(commandName, permission, commandFunc)
+function zeus.AddPermCommand(commandName, permission, prefix)
+    prefix = prefix or "zeus"
     AddCommand(commandName, function(player, ...)
         if zeus.HasPermission(player, permission) then
-            commandFunc(player, ...)
+            CallEvent(prefix .. ":" .. commandName, player, ...)
+            
         else
             AddPlayerChat(player, config["msg-no-permission"])
         end
