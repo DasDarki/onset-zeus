@@ -1,6 +1,6 @@
 {
   "author": "DasDarki",
-  "version": "1.0:0",
+  "version": "1.0:3",
   "files": [
     "client/ui/index.html",
     "client/ui/lightning.png",
