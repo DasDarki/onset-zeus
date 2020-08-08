@@ -6,9 +6,6 @@ Zeus also provides a complete ban and permission system, which even has a simple
 Just download the ZIP-Archive from [here](https://github.com/DasDarki/onset-zeus/releases/tag/v1.0.2) and put the folder from it into the packages folder of your server. Than add "zeus" to the packages in server_config.json and start the server.   
 > To open the Zeus Menu just use the default Key **F5** or use the **/zeus** command.
 
-Or you can use [ScriptsDB](https://scriptsdb.de/) and the OSDB-CLI with the followed command:
-> osdb -i onset-zeus -s
-
 ## Configuration
 Zeus is fully adjustable and uses only one file for all configurations. The config can be found in *packages/zeus/server/io/config.lua* and looks like this by default:
 ```lua
